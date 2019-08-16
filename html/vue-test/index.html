@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    function arrayMethod3() {
+        var numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+        console.log("原始数组:" + numbers);
+        var everyResult = numbers.every(function (value) {
+            return value > 2;
+        });
+        console.log("everyResult: " + everyResult);
+        var someResult = numbers.some(function (value, index, array) {
+            return value > 2;
+        });
+        console.log("someResult: " + someResult);
+        var filterResult = numbers.filter(function (value) {
+            return value > 2;
+        });
+        console.log("filterResult: " + filterResult);
+        var mapResult = numbers.map(function (value) {
+            return value * 2;
+        });
+        console.log("mapResult: " + mapResult);
+        numbers.forEach(function (value) {
+            console.log("当前数字是: " + value);
+        });
+        var sum = numbers.reduce(function (prev, cur, index, array) {
+            return prev + cur;
+        });
+        console.log("reduce result: " + sum);
+        var sum2 = numbers.reduceRight(function (prev, cur, index, array) {
+            return prev + cur;
+        });
+        console.log("reduceRight result: " + sum2);
+    }
+
+    function arrayMethod2() {
+        console.log("arrayMethod2 start.....");
+        var values = [1, 2, 6, 3, 4, 5, 19, "abc"];
+        console.log("数组反转:" + values.reverse());
+        console.log("数组升序排列:" + values.sort());
+        console.log("数组降序排列:" + values.sort().reverse());
+        console.log("添加排序规则后的重排序:" + values.sort(compare));
+        console.log("添加排序规则后的重降排序:" + values.sort(compare).reverse());
+        var colors = ["red", "green", "blue"];
+        var colors2 = colors.concat("yellow", ["black", "brown"]);
+        console.log("concat后的数组:" + colors2);
+        var colors3 = colors2.slice(1);
+        var colors4 = colors2.slice(1, 4);
+        console.log("slice(1)截取后的新数组:" + colors3);
+        console.log("slice(1,4)截取后的新数组:" + colors4);
+        console.log("原始数组:" + colors);
+        var removed = colors.splice(0, 1);
+        console.log("删除第一项元素 :" + colors);
+        console.log("删除原始的数组:" + removed);
+        removed = colors.splice(1, 0, "orange", "white");
+        console.log("从位置1开始插入两项元素:" + colors);
+        console.log("removed:" + removed);
+        removed = colors.splice(1, 1, "red", "purple");
+        console.log("插入两项元素，删除一项元素:" + colors);
+        console.log("删除的元素:" + removed);
+        var numbers = [1, 2, 3, 4, 5, 14, 56, 5, 3, 4, 2, 1];
+        console.log("第一次出现3的位置:" + numbers.indexOf(3));
+        console.log("最后一次出现3的位置:" + numbers.lastIndexOf(3));
+    }
+
+    function arrayMethod1() {
+        var array = [];
+        console.log(array instanceof Array);
+        console.log(typeof array);
+        console.log(Array.isArray(array));
+        array.push("red");
+        var num = array.push("blue");
+        console.log("数组长度：" + num);
+        console.log(array.toString());
+        console.log(array.valueOf());
+        console.log(array);
+        console.log(array.join(","));
+        console.log(array.join("||"));
+        console.log("push后：" + array.toString());
+        console.log("取出最后一项:" + array.pop());
+        console.log("取出第一项:" + array.shift());
+        var count = array.unshift("yellow", "red");
+        console.log("在头部添加元素后长度:" + count);
+        array.push("black");
+        console.log("获取最后一项:" + array.pop());
+        console.log(array);
+    }
+
+    function compare(value1, value2) {
+        return value2 - value1;
+    }
+
+    arrayMethod1();
+    arrayMethod2();
+    arrayMethod3();
+</script>
+<script>
+    function add(num) {
+        return num + 10;
+    }
+
+    function callSomeFunction(someFunction, someArgument) {
+        return someFunction(someArgument);
+    }
+
+    var result = callSomeFunction(add, 10);
+    console.log(result);
+
+    function createComparisonFunction(propertyName) {
+        return function (object1, object2) {
+            var value1 = object1[propertyName];
+            var value2 = object2[propertyName];
+            if (value1 < value2) {
+                return -1;
+            } else if (value1 > value2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        };
+    }
+
+    var data = [{name: "Zachary", age: 28}, {name: "Nicholas", age: 29}];
+    data.sort(createComparisonFunction("name"));
+    console.log("根据name排序: " + data[0].name);
+
+    data.sort(createComparisonFunction("age"));
+    console.log("根据age排序: " + data[0].name);
+
+    function factorial(num) {
+        if (num <= 1) {
+            return 1;
+        } else {
+            //1、该方法可以递归调用factorial函数，但是该递归调用与函数名耦合
+            // return num * factorial(num - 1);
+            //2、可以使用arguments.callee来消除递归调用与函数名耦合的问题
+            //arguments.callee是一个指针，只想拥有这个arguments对象的函数
+            return num * arguments.callee(num - 1);
+        }
+    }
+
+    var trueFactorial = factorial;
+    factorial = function () {
+        return 0;
+    };
+    console.log("5的阶乘是: " + trueFactorial(5));
+    console.log("5的阶乘是: " + factorial(5));
+
+    eval("alert('hi')");
+</script>
+</body>
+</html>
